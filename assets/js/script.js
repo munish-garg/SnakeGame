@@ -29,13 +29,13 @@ const Snake = {
         let headY = this.cells[this.cells.length-1].y;
         let nextX = headX, nextY = headY;
         this.cells.shift();
-        if(flag === "ArrowLeft"){
+        if(this.direction === "left"){
             nextX = headX - 1;
         }
-        else if(flag === "ArrowUp"){
+        else if(this.direction === "up"){
             nextY = headY - 1;
         }
-        else if(flag === "ArrowDown"){
+        else if(Snake.direction === "down"){
             nextY = headY + 1;
         }
         else{
@@ -52,16 +52,16 @@ function init(){
     Snake.createSnake();
     document.addEventListener('keydown', (e)=>{
         if(e.key === "ArrowLeft"){
-            flag = "ArrowLeft";
+            Snake.direction = "left";
         }
         else if(e.key === "ArrowUp"){
-            flag = "ArrowUp";
+            Snake.direction = "up";
         }   
         else if(e.key === "ArrowDown"){
-            flag = "ArrowDown";
+            Snake.direction = "down";
         }
         else{
-            flag = "ArrowRight";
+            Snake.direction = "right";
         }
     })
 }
