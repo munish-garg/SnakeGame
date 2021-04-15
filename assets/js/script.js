@@ -1,5 +1,6 @@
 const canvas = document.getElementById('my-canvas');
 const pen = canvas.getContext('2d');
+let flag = "ArrowRight";
 
 pen.fillStyle = 'yellow';
 const W = 1200;
@@ -26,11 +27,22 @@ const Snake = {
     updateSnake: function(){
         let headX = this.cells[this.cells.length-1].x;
         let headY = this.cells[this.cells.length-1].y;
+        let nextX = headX, nextY = headY;
         this.cells.shift();
-        let nextX = headX+1;
-        let nextY = headY;
+        if(flag === "ArrowLeft"){
+            nextX = headX - 1;
+        }
+        else if(flag === "ArrowUp"){
+            nextY = headY - 1;
+        }
+        else if(flag === "ArrowDown"){
+            nextY = headY + 1;
+        }
+        else{
+            nextX = headX + 1;
+        }
         this.cells.push({
-            x: nextX,
+            x:nextX,
             y:nextY
         })
     }
@@ -38,6 +50,20 @@ const Snake = {
 
 function init(){
     Snake.createSnake();
+    document.addEventListener('keydown', (e)=>{
+        if(e.key === "ArrowLeft"){
+            flag = "ArrowLeft";
+        }
+        else if(e.key === "ArrowUp"){
+            flag = "ArrowUp";
+        }   
+        else if(e.key === "ArrowDown"){
+            flag = "ArrowDown";
+        }
+        else{
+            flag = "ArrowRight";
+        }
+    })
 }
 
 function draw(){
