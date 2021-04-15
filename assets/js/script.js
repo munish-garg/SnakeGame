@@ -1,8 +1,7 @@
 const canvas = document.getElementById('my-canvas');
 const pen = canvas.getContext('2d');
-let flag = "ArrowRight";
+let food = null;
 
-pen.fillStyle = 'yellow';
 const W = 1200;
 const H = 700;
 const cs = 67;
@@ -48,8 +47,18 @@ const Snake = {
     }
 }
 
+function getRandomFood(){
+    let foodX = Math.floor(Math.random()*(W-cs)/cs);
+    let foodY = Math.floor(Math.random()*(H-cs)/cs);
+    return{
+        x:foodX,
+        y:foodY
+    }
+}
+
 function init(){
     Snake.createSnake();
+    food = getRandomFood();
     document.addEventListener('keydown', (e)=>{
         if(e.key === "ArrowLeft"){
             Snake.direction = "left";
@@ -68,7 +77,10 @@ function init(){
 
 function draw(){
     pen.clearRect(0, 0, W, H);
+    pen.fillStyle = 'yellow';
     Snake.drawSnake();
+    pen.fillStyle = 'navy';
+    pen.fillRect(food.x*cs, food.y*cs, cs, cs);
 }
 
 function update(){
