@@ -27,7 +27,6 @@ const Snake = {
         let headX = this.cells[this.cells.length-1].x;
         let headY = this.cells[this.cells.length-1].y;
         let nextX = headX, nextY = headY;
-        this.cells.shift();
         if(this.direction === "left"){
             nextX = headX - 1;
         }
@@ -39,6 +38,14 @@ const Snake = {
         }
         else{
             nextX = headX + 1;
+        }
+        if(nextX === food.x && nextY === food.y){
+            pen.fillStyle = 'navy';
+            food = getRandomFood();
+            pen.fillRect(food.x*cs, food.y*cs, cs, cs);
+        }
+        else{
+            this.cells.shift();
         }
         this.cells.push({
             x:nextX,
