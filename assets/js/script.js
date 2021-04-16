@@ -1,8 +1,9 @@
 const canvas = document.getElementById('my-canvas');
 const pen = canvas.getContext('2d');
 let food = null;
+let score = 0;
 
-const W = 1200;
+const W = 800;
 const H = 700;
 const cs = 67;
 
@@ -29,17 +30,43 @@ const Snake = {
         let nextX = headX, nextY = headY;
         if(this.direction === "left"){
             nextX = headX - 1;
+            if(nextX<0){
+                pen.fillStyle = 'green';
+                pen.font = '40px';
+                pen.fillText('Game Over!!!', 50, 100);
+                clearInterval(id);
+            }
         }
         else if(this.direction === "up"){
             nextY = headY - 1;
+            if(nextY<0){
+                pen.fillStyle = 'green';
+                pen.font = '40px';
+                pen.fillText('Game Over!!!', 50, 100);
+                clearInterval(id);
+            }
         }
         else if(Snake.direction === "down"){
             nextY = headY + 1;
+            if(nextY*cs>=H){
+                pen.fillStyle = 'green';
+                pen.font = '40px';
+                pen.fillText('Game Over!!!', 50, 100);
+                clearInterval(id);
+            }
         }
         else{
             nextX = headX + 1;
+            if(nextX*cs >= W){
+                pen.fillStyle = 'green';
+                pen.font = '40px';
+                pen.fillText('Game Over!!!', 50, 100);
+                clearInterval(id);
+            }
         }
+        //Condition for food...
         if(nextX === food.x && nextY === food.y){
+            score++;
             pen.fillStyle = 'navy';
             food = getRandomFood();
             pen.fillRect(food.x*cs, food.y*cs, cs, cs);
@@ -88,6 +115,9 @@ function draw(){
     Snake.drawSnake();
     pen.fillStyle = 'navy';
     pen.fillRect(food.x*cs, food.y*cs, cs, cs);
+    pen.fillStyle = 'green';
+    pen.font= '40px serif'
+    pen.fillText(`Score ${score}`, 50, 50);
 }
 
 function update(){
